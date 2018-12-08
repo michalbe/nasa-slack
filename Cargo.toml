@@ -1,7 +1,0 @@
-[package]
-name = "nasa-slack"
-version = "0.1.0"
-authors = ["Michał Budzyński <michal@virtualdesign.pl>"]
-edition = "2018"
-
-[dependencies]
