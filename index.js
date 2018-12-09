@@ -1,16 +1,23 @@
 const Slack = require('slack-node');
 const Request = require('request-promise-native');
-
+const Cheerio = require('cheerio');
 const apiToken = process.argv[2];
 
 slack = new Slack(apiToken);
 
-Request.get('https://api.nasa.gov/planetary/apod?api_key=NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo')
+Request.get('https://apod.nasa.gov/apod/astropix.html')
 .then((result) => {
-    try {
-        result = JSON.parse(result);
-        console.log(result);
 
+    try {
+        // result = JSON.parse(result);
+        const $ = Cheerio.load(result);
+        // console.log(result);
+
+        const url = 'https://apod.nasa.gov/apod/' + $('img').eq(0).attr('src');
+        console.log(url);
+        const title = $('center > b').eq(0).text().trim();
+        const explanation = $('p').eq(2).text().replace(/\r?\n|\r/g, ' ');
+        console.log(explanation);
         slack.api('chat.postMessage', {
             text: '',
             attachments: JSON.stringify([
@@ -19,11 +26,11 @@ Request.get('https://api.nasa.gov/planetary/apod?api_key=NNKOjkoul8n1CH18TWA9gwn
                     "color": "#2eb886",
                     "author_name": "Oak & NASA",
                     "pretext": "Oak & Nasa Photo of the day",
-                    "title": result.title,
-                    "title_link": result.hdurl,
-                    "text": result.explanation,
-                    "image_url": result.hdurl,
-                    "thumb_url": result.url,
+                    "title": title,
+                    "title_link": url,
+                    "text": explanation,
+                    "image_url": url,
+                    "thumb_url": url,
                     "footer": "by Osiedlowa Agencja Kosmiczna",
                     "footer_icon": ":rocket:",
                     "ts": 123456789
