@@ -5,4 +5,4 @@ Nasa photo of the day on Slack
 2. add `0 4 * * * node index.js <slack-api-key>` to your crontab
 3. Enjoy
 
-![image.png](Preview)
+![Preview](image.png)
