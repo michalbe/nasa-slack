@@ -18,8 +18,8 @@
   "homepage": "https://github.com/michalbe/nsl#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "node-mattermost": "0.0.1",
     "request": "^2.88.0",
-    "request-promise-native": "^1.0.5",
-    "slack-node": "^0.1.8"
+    "request-promise-native": "^1.0.5"
   }
 }
